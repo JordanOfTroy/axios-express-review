@@ -46,9 +46,12 @@ class App extends Component {
     })
     return (
       <div className="App">
+      <section className='todo_list'>
+        <h1>My New List of Things to be Done </h1>
         <input type="text" value={this.state.userInput} onChange={this.handleInput} />
         <button onClick={this.addTodo}>add Item</button>
         {displayToDos}
+      </section>
       </div>
     );
   }

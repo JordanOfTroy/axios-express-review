@@ -14,10 +14,11 @@ class App extends Component {
     this.handleInput = this.handleInput.bind(this)
     this.addTodo = this.addTodo.bind(this)
     this.editTodo = this.editTodo.bind(this)
+    this.deleteTodo = this.deleteTodo.bind(this)
   }
   // ==== on page load get todos from server ====
-  componentDidMount(){
-    axios.get('/api/todolist').then((res)=>this.setState({toDo:res.data}))
+  componentDidMount() {
+    axios.get('/api/todolist').then((res) => this.setState({ toDo: res.data }))
   }
 
   handleInput(e) {
@@ -26,17 +27,21 @@ class App extends Component {
     })
   }
   addTodo() {
-    axios.post('/api/todolist', {toDoThing:this.state.userInput}).then((res)=> this.setState({toDo:res.data, userInput:''}))
+    axios.post('/api/todolist', { toDoThing: this.state.userInput }).then((res) => this.setState({ toDo: res.data, userInput: '' }))
   }
   editTodo(str, index) {
-    // make this thing work
+    //                             index here will be the same as index:index
+    axios.put('/api/todolist', { newMessage: str, index }).then((res)=>this.setState({toDo: res.data}))
+  }
+  deleteTodo(index){
+    axios.delete(`/api/todolist/${index}`).then((res)=>this.setState({toDo: res.data}))
   }
 
   render() {
     console.log(this.state)
-    let displayToDos = this.state.toDo.map((e,i) => {
+    let displayToDos = this.state.toDo.map((e, i) => {
       return (
-        <ToDo toDo={e} index={i}  editTodo={this.editTodo}/>
+        <ToDo toDo={e} index={i} editTodo={this.editTodo} deleteTodo={this.deleteTodo}/>
       )
     })
     return (

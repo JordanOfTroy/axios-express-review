@@ -9,30 +9,31 @@ export default class Todo extends Component {
         }
         this.handleEditClick = this.handleEditClick.bind(this)
         this.handleEditInput = this.handleEditInput.bind(this)
+        this.handleDelete = this.handleDelete.bind(this)
     }
-    componentDidMount(){
+    componentDidMount() {
         this.setState({
             editInput: this.props.toDo
         })
     }
-    handleEditClick(){
+    handleEditClick() {
         this.state.editToggle
-        ?  this.handleSave()
-        : this.setState({editToggle:true})
+            ? this.handleSave()
+            : this.setState({ editToggle: true })
     }
-    handleSave(){
+    handleSave() {
         this.props.editTodo(this.state.editInput, this.props.index)
-        this.setState({editToggle:false})
+        this.setState({ editToggle: false })
     }
-    handleEditInput(e){
-    
-        this.setState({
-            editInput:e.target.value
-        })
+    handleDelete(){
+        this.props.deleteTodo(this.props.index)
+    }
+    handleEditInput(e) {
+        this.setState({ editInput: e.target.value })
     }
 
     render() {
-        console.log('props',this.props, 'state',this.state)
+        console.log('props', this.props, 'state', this.state)
         return (
             <div>
                 {
@@ -41,14 +42,15 @@ export default class Todo extends Component {
                         : <div>{this.props.toDo}</div>
                 }
                 <button onClick={this.handleEditClick}>
-                {
-                    this.state.editToggle
-                    ?
-                    'Save'
-                    :
-                    'Edit'
-                }
+                    {
+                        this.state.editToggle
+                            ?
+                            'Save'
+                            :
+                            'Edit'
+                    }
                 </button>
+                <button onClick={this.handleDelete}>delete</button>
             </div>
         )
     }

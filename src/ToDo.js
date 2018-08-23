@@ -15,17 +15,21 @@ export default class Todo extends Component {
             editInput: this.props.toDo
         })
     }
+
+
+
+
     handleEditClick(){
         this.state.editToggle
         ?  this.handleSave()
         : this.setState({editToggle:true})
     }
-    handleSave(){
+    handleSave(){ 
         this.props.editTodo(this.state.editInput, this.props.index)
         this.setState({editToggle:false})
     }
     handleEditInput(e){
-    
+
         this.setState({
             editInput:e.target.value
         })

@@ -9,13 +9,16 @@ class App extends Component {
 
     this.state = {
       userInput: '',
-      toDo: ['eat Dinner']
+      toDo: []
     }
     this.handleInput = this.handleInput.bind(this)
     this.addTodo = this.addTodo.bind(this)
     this.editTodo = this.editTodo.bind(this)
   }
   // ==== on page load get todos from server ====
+  componentDidMount(){
+    axios.get('/api/todolist').then((res)=>this.setState({toDo:res.data}))
+  }
 
   handleInput(e) {
     this.setState({
@@ -23,16 +26,10 @@ class App extends Component {
     })
   }
   addTodo() {
-    // add an item to your todo list
+    axios.post('/api/todolist', {toDoThing:this.state.userInput}).then((res)=> this.setState({toDo:res.data, userInput:''}))
   }
   editTodo(str, index) {
-    console.log('look here', this.state.toDo)
-    let toDoCopy = this.state.toDo.slice()
-    console.log(str,index)
-    toDoCopy[index] = str
-    this.setState({
-      toDo:toDoCopy
-    })
+    // make this thing work
   }
 
   render() {

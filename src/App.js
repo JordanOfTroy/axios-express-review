@@ -15,7 +15,7 @@ class App extends Component {
     this.addTodo = this.addTodo.bind(this)
     this.editTodo = this.editTodo.bind(this)
   }
-  // ==== on page load get todos from server ====
+ 
   componentDidMount(){
     axios.get('/api/todolist').then((res)=>this.setState({toDo:res.data}))
   }
@@ -26,10 +26,14 @@ class App extends Component {
     })
   }
   addTodo() {
-    axios.post('/api/todolist', {toDoThing:this.state.userInput}).then((res)=> this.setState({toDo:res.data, userInput:''}))
+    axios.post('/api/todolist', {toDoThing:this.state.userInput})
+    .then((res)=> this.setState({toDo:res.data, userInput:''}))
   }
   editTodo(str, index) {
-    // make this thing work
+    axios.put('/api/todolist', {updatedStr:str, index: index})
+    .then ((res) => this.setState({
+      toDo: res.data
+    }))
   }
 
   render() {
